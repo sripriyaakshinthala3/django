@@ -39,3 +39,73 @@ def temp1(request):
 
 def temp2(request):
     return render(request,"./second.html")    
+
+products =[
+  {
+    "id": 1,
+    "name": "Laptop",
+    "category": "Electronics",
+    "price": 55000,
+    "brand": "Dell",
+    "stock": 10,
+    "rating": 4.5
+  },
+  {
+    "id": 2,
+    "name": "Smartphone",
+    "category": "Electronics",
+    "price": 25000,
+    "brand": "Samsung",
+    "stock": 15,
+    "rating": 4.3
+  },
+  {
+    "id": 3,
+    "name": "Headphones",
+    "category": "Accessories",
+    "price": 2000,
+    "brand": "Boat",
+    "stock": 30,
+    "rating": 4.1
+  },
+  {
+    "id": 4,
+    "name": "Office Chair",
+    "category": "Furniture",
+    "price": 8000,
+    "brand": "Ikea",
+    "stock": 5,
+    "rating": 4.0
+  },
+  {
+    "id": 5,
+    "name": "Water Bottle",
+    "category": "Kitchen",
+    "price": 500,
+    "brand": "Milton",
+    "stock": 50,
+    "rating": 4.2
+  }
+]
+
+
+
+
+def  get_productby_category(request):
+    category = request.GET.get("category")
+    
+    if not category:
+        return JsonResponse(
+            {"error": "category query parameter is required"},
+            status=400
+        )
+
+ 
+    filtered_data =[]
+    for product in products:
+        if product["category"].lower() == category.lower():
+
+            filtered_data.append(product)
+
+
+    return JsonResponse(filtered_data, safe=False)    
